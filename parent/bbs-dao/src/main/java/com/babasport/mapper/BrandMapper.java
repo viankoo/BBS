@@ -35,4 +35,10 @@ public interface BrandMapper {
 	 */
 	void deleteByIds(@Param("ids")Long[] ids);
 
+	/**
+	 * 查询所有的品牌
+	 * @return
+	 */
+	List<Brand> findAll();
+
 }

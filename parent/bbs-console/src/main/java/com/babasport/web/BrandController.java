@@ -1,7 +1,9 @@
 package com.babasport.web;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,11 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.babasport.pojo.Brand;
-import com.babasport.pojo.TestTb;
 import com.babasport.service.BrandService;
-import com.babasport.service.TestTbService;
 import com.guwei.tools.Encoding;
 import com.guwei.tools.PageHelper.Page;
 
@@ -52,7 +53,7 @@ public class BrandController {
 		
 		return "/brand/list";
 	}
-	
+	//品牌编辑页面
 	@RequestMapping("/brand/toEdit.do")
 	public String consoleBrandToEditShow(Model model,@RequestParam("id")Long id){
 		System.out.println("consoleBrandToEditShow:"+id);
@@ -63,14 +64,14 @@ public class BrandController {
 		
 		return "/brand/edit";
 	}
-	
+	//品牌编辑
 	@RequestMapping("/brand/edit.do")
 	public String consoleBrandEditShow(Brand brand){
 		System.out.println("consoleBrandEditShow:"+brand.toString());
 		brandService.updateBrand(brand);
 		return "redirect:/console/brand/list.do";
 	}
-	
+	//品牌批量删除
 	@RequestMapping("/brand/delete.do")
 	public String consoleBrandDeleteShow(Long[] ids,String name,String isDisplay,String pageNum){
 		System.out.println("consoleBrandDeleteShow:"+name+"...|"+isDisplay+"....|"+pageNum+"...|"+ids);
@@ -79,4 +80,11 @@ public class BrandController {
 				+ isDisplay + "&pageNum=" + pageNum;
 	}
 	
+	
+	@RequestMapping("brand/findName.do")
+	@ResponseBody
+	public List<Brand> ajaxGetBrandName(){
+		List<Brand> brands = brandService.findAll();
+		return brands;
+	}
 }

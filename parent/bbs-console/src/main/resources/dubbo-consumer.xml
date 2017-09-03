@@ -21,7 +21,7 @@
 		
 		<!-- dubbo服务消费方 -->
 		<!-- 1、dubbo消费方名称 -->
-		<dubbo:application name="com.babasport.web.CenterController"/>
+		<dubbo:application name="babasport-consloe"/>
 		<!-- 2、连接注册中心 -->
 		<!-- <dubbo:registry address="192.168.57.111:2181" protocol="zookeeper"/> -->
 		
@@ -29,9 +29,11 @@
 		
 		<!-- 3、调用接口 -->
 		<!-- <dubbo:reference interface="com.babasport.service.TestTbService" id="testTbService"/> -->
-		<dubbo:reference interface="com.babasport.service.TestTbService" id="testTbService"
-		url="dubbo://127.0.0.1:20880" />
 		<dubbo:reference interface="com.babasport.service.BrandService" id="brandService"
+		url="dubbo://127.0.0.1:20880" />
+		<dubbo:reference interface="com.babasport.service.ProductService" id="productService"
+		url="dubbo://127.0.0.1:20880" />
+		<dubbo:reference interface="com.babasport.service.SkuService" id="skuService"
 		url="dubbo://127.0.0.1:20880" />
 		
 		<!-- 全局设置

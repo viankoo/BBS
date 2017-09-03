@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.babasport.mapper.SkuMapper">
+	<!-- 一件商品对应一种颜色 -->
+	<resultMap type="Sku" id="skuColor" autoMapping="true">
+		<id column="id" property="id"/>
+		<association property="color" javaType="Color" autoMapping="true">
+			<id column="color_id" property="id"/>
+		</association>
+	</resultMap>
+	
+	<select id="findByPid" resultMap="skuColor" >
+	SELECT
+		*
+	FROM
+		bbs_color
+	LEFT JOIN bbs_sku ON bbs_color.id = bbs_sku.color_id
+	WHERE
+		bbs_sku.product_id = #{productId}
+	</select>
+	<!-- 
+		用superpojo的方法的注意点：
+		直接用superpojo（map）接收，不用写resultMap关系，但是所有的实体类属性全部不可以用，应该参照表的字段，系统字段可以起别名
+		 -->
+	<select id="findColorByProductId" resultType="SuperPojo" >
+	SELECT
+		*,bbs_sku.id as sku_id
+	FROM
+		bbs_color
+	LEFT JOIN bbs_sku ON bbs_color.id = bbs_sku.color_id
+	WHERE
+		bbs_sku.product_id = #{pid}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 根据商品id查询出旗下库存最低价 -->
+	<select id="findMinPriceByProductId" resultType="java.lang.Float">
+		SELECT
+			min(price)
+		FROM
+			bbs_sku
+		WHERE
+			bbs_sku.product_id = #{productId}
+	</select>
+	
+</mapper>

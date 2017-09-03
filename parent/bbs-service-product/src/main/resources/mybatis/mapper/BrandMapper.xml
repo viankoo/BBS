@@ -71,4 +71,9 @@
 			#{id}
 		</foreach>
 	</update>
+	
+	<!-- 查询所有的品牌 -->
+	<select id="findAll" resultType="Brand">
+		select * from bbs_brand
+	</select>
 </mapper>

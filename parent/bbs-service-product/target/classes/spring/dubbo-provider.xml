@@ -30,7 +30,8 @@
 	<!-- 3、暴露本机ip 127.0.0.1 192.168.57.1（能与虚拟机192.168.57.111连接） 192.168.27.xxx局域网-->
 	<dubbo:protocol port="20880" name="dubbo" host="127.0.0.1"/>
 	<!-- 4、暴露接口 -->
-	<dubbo:service interface="com.babasport.service.TestTbService" ref="testTbService"/>
 	<dubbo:service interface="com.babasport.service.BrandService" ref="brandService"/>
+	<dubbo:service interface="com.babasport.service.ProductService" ref="productService"/>
+	<dubbo:service interface="com.babasport.service.SkuService" ref="skuService"/>
 	
 </beans>

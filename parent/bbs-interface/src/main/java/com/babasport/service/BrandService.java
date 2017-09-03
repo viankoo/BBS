@@ -41,5 +41,18 @@ public interface BrandService {
 	 */
 	void deleteByIds(Long[] ids);
 
+	/**
+	 * 查询所有的品牌
+	 * @return
+	 */
+	List<Brand> findAll();
+
+	/**
+	 * 从redis查询所有品牌的name和id
+	 * 
+	 * @return
+	 */
+	List<Brand> findAllFromRedis();
+
 	
 }

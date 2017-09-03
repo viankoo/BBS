@@ -29,6 +29,22 @@ a {
 </style>
 <script type="text/javascript">
 $(function(){
+	
+	//加载品牌
+	/* $.ajax({
+		url:'/console/brand/findName.do',
+		type:'GET',
+		success:function(data){   
+			alert("data:"+data);
+			if (data==null) {
+				return ;
+			}
+			$("data").each(function(){
+				alert(this.name+"..."+this.id);
+				$("select[name='brandId']").append("<option value='"+this.id+"'>"+this.name+"</option>");
+			});
+		}}); */
+	
 	var tObj;
 	$("#tabs a").each(function(){
 		if($(this).attr("class").indexOf("here") == 0){tObj = $(this)}
@@ -48,11 +64,11 @@ $(function(){
 					//指定上传文件参数名称
 					filePostName  : "uploadFile",
 					//指定上传文件请求的url。
-					uploadJson : '/upload/uploadFck.do',
+					uploadJson : '/uploadFcks.do',
 					//上传类型，分别为image、flash、media、file
-					dir : "image"//,
-// 					width : '1000px',
-// 					height : '400px'
+					dir : "image",
+					width : '1000px',
+					height : '400px'
 				}; 
 				KindEditor.create('#productdesc',kingEditorParams);
 				KindEditor.sync();
@@ -64,10 +80,10 @@ $(function(){
 function uploadPic(){
 	//上传图片 异步的  	Jquery.form.js
 	var options = {
-			url : "/upload/uploadPics.do",
+			url : "/uploadFiles.do",
 			type : "post",
 			dataType : "json",
-			success : function(data){
+			success : function(data){   // 数组形式的json
 				//多图片回显
 				var html = '<tr>'
 						 + '<td width="20%" class="pn-flabel pn-flabel-h"></td>'
@@ -109,21 +125,6 @@ function uploadPic(){
 				<tr>
 					<td width="20%" class="pn-flabel pn-flabel-h">
 						<span class="pn-frequired">*</span>
-						商品类型:</td><td width="80%" class="pn-fcontent">
-								<select name="typeId">
-									<option value="">请选择</option>
-									<option value="2">瑜珈服</option>
-									<option value="3">瑜伽辅助</option>
-									<option value="4">瑜伽铺巾</option>
-									<option value="5">瑜伽垫</option>
-									<option value="6">舞蹈鞋服</option>
-									<option value="7">其它</option>
-								</select>
-					</td>
-				</tr>
-				<tr>
-					<td width="20%" class="pn-flabel pn-flabel-h">
-						<span class="pn-frequired">*</span>
 						商品名称:</td><td width="80%" class="pn-fcontent">
 						<input type="text" class="required" name="name" maxlength="100" size="100"/>
 					</td>
@@ -133,9 +134,9 @@ function uploadPic(){
 						商品品牌:</td><td width="80%" class="pn-fcontent">
 						<select name="brandId">
 							<option value="">请选择品牌</option>
-							<option value="1">依琦莲</option>
-							<option value="2">凯速（KANSOON）</option>
-							<option value="3">梵歌纳（vangona）</option>
+							<c:forEach var="brand" items="${brands }">
+							<option value="${brand.id }">${brand.name }</option>
+							</c:forEach>
 						</select>
 					</td>
 				</tr>
@@ -149,13 +150,12 @@ function uploadPic(){
 					<td width="20%" class="pn-flabel pn-flabel-h">
 						<span class="pn-frequired">*</span>
 						颜色:</td><td width="80%" class="pn-fcontent">
-							<input type="checkbox" value="9" name="colors"/>西瓜红
-							<input type="checkbox" value="9" name="colors"/>西瓜红
-							<input type="checkbox" value="9" name="colors"/>西瓜红
-							<input type="checkbox" value="9" name="colors"/>西瓜红
-							<input type="checkbox" value="9" name="colors"/>西瓜红
-							<input type="checkbox" value="9" name="colors"/>西瓜红
-							<input type="checkbox" value="9" name="colors"/>西瓜红
+						<c:forEach items="${colors }" var="color"  >
+							<c:if test="${(color.id+2) %10==0 }">
+								<br/>
+							</c:if>
+							<input type="checkbox" value="${color.id }" name="colors"/>${color.name }
+						</c:forEach>
 					</td>
 				</tr>
 				<tr>
@@ -190,7 +190,7 @@ function uploadPic(){
 				<tr>
 					<td width="20%" class="pn-flabel pn-flabel-h"></td>
 						<td width="80%" class="pn-fcontent">
-						<input type="file" onchange="uploadPic()" name="pics" multiple="multiple"/>
+						<input type="file" onchange="uploadPic()" name="mpfs" multiple="multiple"/><!-- multiple 多选 -->
 					</td>
 				</tr>
 			</tbody>
@@ -211,7 +211,8 @@ function uploadPic(){
 			<tbody>
 				<tr>
 					<td class="pn-fbutton" colspan="2">
-						<input type="submit" class="submit" value="提交"/> &nbsp; <input type="reset" class="reset" value="重置"/>
+						<input type="submit" class="submit" value="提交"/> &nbsp; 
+						<input type="reset" class="reset" value="重置"/>
 					</td>
 				</tr>
 			</tbody>

@@ -51,7 +51,6 @@
 			<th>是否可用</th>
 			<th>操作选项</th>
 		</tr>
-		
 	</thead>
 	<tbody class="pn-ltbody">
 		<c:forEach items="${pagebrands.result }" var="brand">
@@ -70,7 +69,7 @@
 		</c:forEach>
 	</tbody>
 </table>
-<%-- <div class="page pb15">
+<div class="page pb15">
 	<span class="r inb_a page_b"> <a href="list.do?name=${name}&isDisplay=${isDisplay}&pageNum=1"><font size="2">首页</font></a> <c:if test="${pageBrand.pageNum<=1}">
 			<font size="2">上一页</font>
 		</c:if> <c:if test="${pagebrands.pageNum>1}">
@@ -94,9 +93,9 @@
 		</c:if> <a href="list.do?name=${name}&isDisplay=${isDisplay}&pageNum=${pagebrands.pages}"><font size="2">尾页</font></a> 共<var>${pagebrands.pages}</var>页 到第 <input type="text" size="3" id="PAGENO" />页 <input type="button" onclick="javascript:window.location.href = '/product/list.do?&amp;isShow=0&amp;pageNo=' + $('#PAGENO').val() " value="确定" class="hand btn60x20" id="skip" />
 
 	</span>
-</div> --%>
+</div>
 <!-- 分页开始 -->
- <div class="page">
+ <%-- <div class="page">
 	
 	<c:if test="${pagebrands.pageNum > 1 }">
 		<button onclick="gogogo(1)">首页</button>
@@ -129,7 +128,7 @@
 		location = "list.do?pageNum=" 
 		+ pageNum + "&pageSize=" + pageSize.value+"&name=${name}&isDisplay=${isDisplay}";
 	}
-</script>
+</script> --%>
 <!-- 分页结束 -->
 <div style="margin-top:15px;">
 <input class="del-button" type="button" value="删除" onclick="optDelete('${name}','${isDisplay }','${pagebrands.pageNum }');"/>
